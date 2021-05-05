@@ -1,5 +1,6 @@
 ## bulkedit.mod - flatCore Module
 
+![screenshot-acp-bulkedit](https://user-images.githubusercontent.com/5982156/117194960-018bfe80-ade5-11eb-9cef-87157f2bb82a.jpg)
 
 This Addon helps you to organize your Page structure. You can also easily edit the metadata of all pages.
 
