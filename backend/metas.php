@@ -53,16 +53,16 @@ foreach($get_all_pages as $page) {
 	echo '<div class="col-md-3">';
 	echo '<div class="input-group">';
 	echo '<span class="input-group-text" id="basic-addon1">#'.$page['page_id'].'</span>';
-	echo '<input type="text" name="page_linkname" value="' .$page['page_linkname'].'" onchange="mySubmit(this.form)" class="form-control">';
+	echo '<input type="text" name="page_linkname" value="' .htmlentities($page['page_linkname']).'" onchange="mySubmit(this.form)" class="form-control">';
 	echo '</div>';
 	echo '</div>';
 		
 	echo '<div class="col-md-4">';
-	echo '<input type="text" name="page_title" value="' .$page['page_title'].'" onchange="mySubmit(this.form)" class="form-control">';
+	echo '<input type="text" name="page_title" value="' .htmlentities($page['page_title']).'" onchange="mySubmit(this.form)" class="form-control">';
 	echo '</div>';
 	
 	echo '<div class="col-md-5">';
-	echo '<input type="text" name="page_meta_description" value="' .$page['page_meta_description'].'" onchange="mySubmit(this.form)" class="form-control">';
+	echo '<input type="text" name="page_meta_description" value="' .htmlentities($page['page_meta_description']).'" onchange="mySubmit(this.form)" class="form-control">';
 	echo '</div>';
 	
 	
