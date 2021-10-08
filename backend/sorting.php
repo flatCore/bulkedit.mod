@@ -26,7 +26,7 @@ echo '<div class="max-height-container">';
 
 
 echo '<div class="row">';
-echo '<div class="col-md-6">';
+echo '<div class="col-lg-6">';
 
 echo '<div id="formresult" class="card p-2 mb-3">Results ...</div>';
 
@@ -40,7 +40,7 @@ for($i=0;$i<$cnt_pages;$i++) {
 	}
 	
 	echo '<div class="row">';
-	echo '<div class="col-4">';
+	echo '<div class="col-6">';
 	echo '<form action="?tn=moduls&sub=bulkedit.mod&a=sorting" method="POST" class="auto_send pb-3">';
 	
 	
@@ -71,7 +71,7 @@ echo '</div>';
 
 
 echo '</div>';
-echo '<div class="col-md-6">';
+echo '<div class="col-lg-6">';
 
 echo '<div class="card p-1">';
 

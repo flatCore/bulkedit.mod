@@ -1,7 +1,7 @@
 <?php
 	
 session_start();
-error_reporting(E_ALL ^E_NOTICE);
+error_reporting(0);
 
 require '../../../lib/Medoo.php';
 use Medoo\Medoo;
@@ -13,16 +13,13 @@ if(is_file('../../../config_database.php')) {
 	$db_type = 'mysql';
 	
 	$database = new Medoo([
-
-		'database_type' => 'mysql',
-		'database_name' => "$database_name",
-		'server' => "$database_host",
+		'type' => 'mysql',
+		'database' => "$database_name",
+		'host' => "$database_host",
 		'username' => "$database_user",
 		'password' => "$database_psw",
-	 
 		'charset' => 'utf8',
 		'port' => $database_port,
-	 
 		'prefix' => DB_PREFIX
 	]);
 	
@@ -34,13 +31,12 @@ if(is_file('../../../config_database.php')) {
 	
 } else {
 	$db_type = 'sqlite';
-	
-	
+
 	define("CONTENT_DB", "$fc_db_content");
 
 	$db_content = new Medoo([
-		'database_type' => 'sqlite',
-		'database_file' => CONTENT_DB
+		'type' => 'sqlite',
+		'database' => CONTENT_DB
 	]);
 	
 	
