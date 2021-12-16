@@ -2,9 +2,13 @@
 
 ![screenshot-acp-bulkedit](https://user-images.githubusercontent.com/5982156/117194960-018bfe80-ade5-11eb-9cef-87157f2bb82a.jpg)
 
-* (Re-)Organize your Page structure.
-* Easily edit the metadata of all Pages.
-* Search and Replace in Titles, Meta Descriptions and Page Contents
+### Requirements
+
+This addon requires at least flatCore version 2.1.1. It is not relevant whether MySQL or SQLite is used.
+
+* (Re-)organize your page structure.
+* Easily edit the metadata of all pages.
+* Search and replace in titles, meta descriptions and page contents
 
 ### __ATTENTION__
 

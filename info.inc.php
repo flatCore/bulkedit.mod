@@ -5,7 +5,7 @@
  */
 
 $mod['name'] = "bulkedit";
-$mod['version'] = "0.2";
+$mod['version'] = "0.3";
 $mod['author'] = "flatCore DevTeam";
 $mod['description'] = "This Addon helps you to organize your Page Structure";
 
