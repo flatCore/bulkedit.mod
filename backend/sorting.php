@@ -76,21 +76,16 @@ echo '<div class="col-lg-6">';
 echo '<div class="card p-1">';
 
 
-
-/* filter buttons for languages */
 $lang_btn_group = '<div class="btn-group">';
-for($i=0;$i<count($arr_lang);$i++) {
-	$lang_desc = $arr_lang[$i]['lang_desc'];
-	$lang_folder = $arr_lang[$i]['lang_folder'];
-	
+foreach($lang_codes as $lang_code) {
 	$this_btn_status = '';
-	if(strpos($_SESSION['be_lang'], "$lang_folder") !== false) {
+	if(strpos("$_SESSION[be_lang]", "$lang_code") !== false) {
 		$this_btn_status = 'active';
 	}
-	
-	$lang_btn_group .= '<a href="?tn=moduls&sub=bulkedit.mod&a=sorting&switchLang='.$lang_folder.'" class="btn btn-sm btn-fc '.$this_btn_status.'">'.$lang_folder.'</a>';
+	$lang_btn_group .= '<a href="?tn=moduls&sub=bulkedit.mod&a=sorting&switchLang='.$lang_code.'" class="btn btn-sm btn-fc '.$this_btn_status.'">'.$lang_code.'</a>';
 }
 $lang_btn_group .= '</div>';
+
 
 echo '<div class="list-group list-group-flush">';
 echo $lang_btn_group;

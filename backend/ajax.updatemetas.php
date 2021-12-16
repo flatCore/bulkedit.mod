@@ -7,6 +7,8 @@ require '../../../lib/Medoo.php';
 use Medoo\Medoo;
 
 require '../../../config.php';
+//require 'core/functions.php';
+require '../../../global/functions.php';
 
 if(is_file('../../../config_database.php')) {
 	include '../../../config_database.php';
@@ -45,11 +47,14 @@ if(is_file('../../../config_database.php')) {
 
 require_once '../../../acp/core/access.php';
 
+	$page_title = fc_return_clean_value($_POST['page_title']);
+	$page_linkname = fc_return_clean_value($_POST['page_linkname']);
+	$page_meta_description = fc_return_clean_value($_POST['page_meta_description']);
 
 $data = $db_content->update("fc_pages", [
-	"page_title" => $_POST['page_title'],
-	"page_linkname" => $_POST['page_linkname'],
-	"page_meta_description" => $_POST['page_meta_description']
+	"page_title" => $page_title,
+	"page_linkname" => $page_linkname,
+	"page_meta_description" => $page_meta_description
 	], [
 	"page_id" => $_POST['page_id']
 ]);

@@ -38,36 +38,33 @@ echo '<div class="col-md-9">';
 
 echo '<div id="formresult" class="card p-2 mb-3">Results ...</div>';
 
-echo '<div class="row mb-2">';
-echo '<div class="col-md-3">Linkname</div>';
-echo '<div class="col-md-4">Title</div>';
-echo '<div class="col-md-5">Description</div>';
-echo '</div>';
-
 echo '<div class="scroll-box">';
 
 foreach($get_all_pages as $page) {
 	echo '<form action="?tn=moduls&sub=bulkedit.mod&a=metas" method="POST" class="auto_send">';
 	echo '<div class="row mb-1">';
 	
-	echo '<div class="col-md-3">';
+	echo '<div class="col-md-4">';
+	echo '<label>Linkname</label>';
 	echo '<div class="input-group">';
 	echo '<span class="input-group-text" id="basic-addon1">#'.$page['page_id'].'</span>';
-	echo '<input type="text" name="page_linkname" value="' .htmlentities($page['page_linkname']).'" onchange="mySubmit(this.form)" class="form-control">';
+	echo '<input type="text" name="page_linkname" value="' .$page['page_linkname'].'" onchange="mySubmit(this.form)" class="form-control">';
 	echo '</div>';
 	echo '</div>';
 		
-	echo '<div class="col-md-4">';
-	echo '<input type="text" name="page_title" value="' .htmlentities($page['page_title']).'" onchange="mySubmit(this.form)" class="form-control">';
+	echo '<div class="col-md-8">';
+	echo '<label>Titel</label>';
+	echo '<input type="text" name="page_title" value="' .$page['page_title'].'" onchange="mySubmit(this.form)" class="form-control">';
 	echo '</div>';
 	
-	echo '<div class="col-md-5">';
-	echo '<input type="text" name="page_meta_description" value="' .htmlentities($page['page_meta_description']).'" onchange="mySubmit(this.form)" class="form-control">';
+	echo '<div class="col-md-12 mt-2">';
+	echo '<label>Description</label>';
+	echo '<input type="text" name="page_meta_description" value="' .$page['page_meta_description'].'" onchange="mySubmit(this.form)" class="form-control">';
 	echo '</div>';
 	
 	
 	
-	echo '</div>';
+	echo '</div><hr>';
 	
 	echo '<input type="hidden" name="page_id" value="'.$page['page_id'].'">';
 	echo '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
@@ -102,21 +99,16 @@ echo '<a href="?tn=moduls&sub=bulkedit.mod&a=metas&pt=s" class="list-group-item 
 echo '</div><hr>';
 
 
-
-/* filter buttons for languages */
 $lang_btn_group = '<div class="btn-group">';
-for($i=0;$i<count($arr_lang);$i++) {
-	$lang_desc = $arr_lang[$i]['lang_desc'];
-	$lang_folder = $arr_lang[$i]['lang_folder'];
-	
+foreach($lang_codes as $lang_code) {
 	$this_btn_status = '';
-	if(strpos("$_SESSION[be_lang]", "$lang_folder") !== false) {
+	if(strpos("$_SESSION[be_lang]", "$lang_code") !== false) {
 		$this_btn_status = 'active';
 	}
-	
-	$lang_btn_group .= '<a href="?tn=moduls&sub=bulkedit.mod&a=metas&switchLang='.$lang_folder.'" class="btn btn-sm btn-fc '.$this_btn_status.'">'.$lang_folder.'</a>';
+	$lang_btn_group .= '<a href="?tn=moduls&sub=bulkedit.mod&a=metas&switchLang='.$lang_code.'" class="btn btn-sm btn-fc '.$this_btn_status.'">'.$lang_code.'</a>';
 }
 $lang_btn_group .= '</div>';
+
 
 echo '<div class="list-group list-group-flush">';
 echo $lang_btn_group;
