@@ -13,6 +13,17 @@ if($_GET['pt'] == 's') {
 	$_SESSION['be_pt'] = 's';
 }
 
+if(!isset($_SESSION['be_st']) OR $_GET['st'] == 'a') {
+	$_SESSION['be_st'] = 'a';
+}
+
+if($_GET['st'] == 'p' || $_GET['st'] == 'd' || $_GET['st'] == 'pr' || $_GET['st'] == 'g') {
+	$_SESSION['be_st'] = $_GET['st'];
+}
+
+
+
+
 /* language */
 $arr_lang = get_all_languages();
 
@@ -25,8 +36,29 @@ if($_GET['switchLang']) {
 }
 
 
-$get_all_pages = be_get_pages($_SESSION['be_pt'],$_SESSION['be_lang']);
+$get_all_pages = be_get_pages($_SESSION['be_pt'],$_SESSION['be_st'],$_SESSION['be_lang']);
 $cnt_pages = count($get_all_pages);
+
+
+/* thumbnails */
+$images = fc_get_all_media_data('image');
+$images = fc_unique_multi_array($images,'media_file');
+$thumbs = array();
+
+foreach($images as $img) {
+	
+	$image_name = basename($img['media_file']);
+	if($prefs_pagethumbnail_prefix != '') {
+			if((strpos($image_name, $prefs_pagethumbnail_prefix)) === false) {
+				continue;
+			}
+		}
+	
+	$thumbs[] = $img['media_file'];
+}
+
+
+
 
 echo '<div class="subHeader">bulkedit.mod / edit meta data / (Matches: '.$cnt_pages.')</div>';
 
@@ -42,6 +74,8 @@ echo '<div class="scroll-box">';
 
 foreach($get_all_pages as $page) {
 	echo '<form action="?tn=moduls&sub=bulkedit.mod&a=metas" method="POST" class="auto_send">';
+	echo '<div class="card p-1 mb-1">';
+	echo '<div class="card-header">'.$page['page_permalink'].'</div>';
 	echo '<div class="row mb-1">';
 	
 	echo '<div class="col-md-4">';
@@ -57,17 +91,35 @@ foreach($get_all_pages as $page) {
 	echo '<input type="text" name="page_title" value="' .$page['page_title'].'" onchange="mySubmit(this.form)" class="form-control">';
 	echo '</div>';
 	
-	echo '<div class="col-md-12 mt-2">';
+	echo '<div class="col-md-8 mt-2">';
 	echo '<label>Description</label>';
 	echo '<input type="text" name="page_meta_description" value="' .$page['page_meta_description'].'" onchange="mySubmit(this.form)" class="form-control">';
 	echo '</div>';
 	
+	echo '<div class="col-md-4 mt-2">';
+	echo '<label>Thumbnail</label>';
+	echo '<select name="page_thumbnail" class="form-control" onchange="mySubmit(this.form)">';
+	echo '<option value="">No selection</option>';
+	foreach($thumbs as $thumb) {
+		
+		$sel = '';
+		if($page['page_thumbnail'] == $thumb) {
+			$sel = 'selected';
+		}
+		
+		echo '<option value="'.$thumb.'" '.$sel.'>'.basename($thumb).'</option>';
+	}
+	echo '</select>';
 	
+
+	echo '</div>';
 	
-	echo '</div><hr>';
+	echo '</div>';
+	
 	
 	echo '<input type="hidden" name="page_id" value="'.$page['page_id'].'">';
 	echo '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
+	echo '</div>'; // card
 	echo '</form>';
 }
 
@@ -81,6 +133,7 @@ echo '<div class="card p-1">';
 
 echo '<div class="list-group">';
 
+/* page type */
 $set_be_pt1 = '';
 $set_be_pt2 = '';
 $set_be_pt3 = '';
@@ -96,6 +149,32 @@ if($_SESSION['be_pt'] == 'a') {
 echo '<a href="?tn=moduls&sub=bulkedit.mod&a=metas&pt=a" class="list-group-item list-group-item-ghost '.$set_be_pt1.'">All</a>';
 echo '<a href="?tn=moduls&sub=bulkedit.mod&a=metas&pt=o" class="list-group-item list-group-item-ghost '.$set_be_pt2.'">Ordered</a>';
 echo '<a href="?tn=moduls&sub=bulkedit.mod&a=metas&pt=s" class="list-group-item list-group-item-ghost '.$set_be_pt3.'">Single Pages</a>';
+echo '</div><hr>';
+
+/* status type */
+$set_be_st1 = ''; // all
+$set_be_st2 = ''; // public
+$set_be_st3 = ''; // ghost
+$set_be_st4 = ''; // private
+$set_be_st5 = ''; // draft
+
+if($_SESSION['be_st'] == 'a') {
+	$set_be_st1 = 'active';
+} else if($_SESSION['be_st'] == 'p') {
+	$set_be_st2 = 'active';
+} else if($_SESSION['be_st'] == 'g') {
+	$set_be_st3 = 'active';
+} else if($_SESSION['be_st'] == 'pr') {
+	$set_be_st4 = 'active';
+} else if($_SESSION['be_st'] == 'd') {
+	$set_be_st5 = 'active';
+}
+
+echo '<a href="?tn=moduls&sub=bulkedit.mod&a=metas&st=a" class="list-group-item list-group-item-ghost '.$set_be_st1.'">All</a>';
+echo '<a href="?tn=moduls&sub=bulkedit.mod&a=metas&st=p" class="list-group-item list-group-item-ghost '.$set_be_st2.'">Public</a>';
+echo '<a href="?tn=moduls&sub=bulkedit.mod&a=metas&st=g" class="list-group-item list-group-item-ghost '.$set_be_st3.'">Ghost</a>';
+echo '<a href="?tn=moduls&sub=bulkedit.mod&a=metas&st=pr" class="list-group-item list-group-item-ghost '.$set_be_st4.'">Private</a>';
+echo '<a href="?tn=moduls&sub=bulkedit.mod&a=metas&st=d" class="list-group-item list-group-item-ghost '.$set_be_st5.'">Draft</a>';
 echo '</div><hr>';
 
 

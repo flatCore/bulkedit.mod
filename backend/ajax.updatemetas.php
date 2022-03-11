@@ -47,14 +47,16 @@ if(is_file('../../../config_database.php')) {
 
 require_once '../../../acp/core/access.php';
 
-	$page_title = fc_return_clean_value($_POST['page_title']);
-	$page_linkname = fc_return_clean_value($_POST['page_linkname']);
-	$page_meta_description = fc_return_clean_value($_POST['page_meta_description']);
+$page_title = fc_return_clean_value($_POST['page_title']);
+$page_linkname = fc_return_clean_value($_POST['page_linkname']);
+$page_meta_description = fc_return_clean_value($_POST['page_meta_description']);
+$page_thumbnail = $_POST['page_thumbnail'];
 
 $data = $db_content->update("fc_pages", [
 	"page_title" => $page_title,
 	"page_linkname" => $page_linkname,
-	"page_meta_description" => $page_meta_description
+	"page_meta_description" => $page_meta_description,
+	"page_thumbnail" => $page_thumbnail
 	], [
 	"page_id" => $_POST['page_id']
 ]);

@@ -6,7 +6,7 @@
  * lang a = all, en/de/es/ ... filter by language
  */
 
-function be_get_pages($type,$lang) {
+function be_get_pages($type,$status,$lang) {
 	
 	global $db_content;
 	global $languagePack;
@@ -21,6 +21,22 @@ function be_get_pages($type,$lang) {
 		$type_query = "page_sort = '' ";
 	}
 	
+	if($status == 'a') {
+		$status_query = "page_status != '' ";
+	}
+	if($status == 'p') {
+		$status_query = "page_status = 'public' ";
+	}
+	if($status == 'pr') {
+		$status_query = "page_status = 'private' ";
+	}
+	if($status == 'g') {
+		$status_query = "page_status = 'ghost' ";
+	}
+	if($status == 'd') {
+		$status_query = "page_status = 'draft' ";
+	}
+	
 
 	if($lang == '') {
 		$lang = $languagePack;
@@ -28,7 +44,7 @@ function be_get_pages($type,$lang) {
 	
 
 	
-	$query = "SELECT * FROM fc_pages WHERE (($type_query) AND (page_language = '$lang')) ORDER BY page_sort *1 ASC, LENGTH(page_sort), page_sort ASC";
+	$query = "SELECT * FROM fc_pages WHERE (($type_query) AND ($status_query) AND (page_language = '$lang')) ORDER BY page_sort *1 ASC, LENGTH(page_sort), page_sort ASC";
 	$get_pages = $db_content->query($query)->fetchAll();
 	return $get_pages;
 	
